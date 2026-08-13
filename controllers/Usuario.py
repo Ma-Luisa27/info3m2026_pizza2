@@ -23,3 +23,15 @@ def add():
 		db.session.commit()
 		return redirect(url_for('.recovery'))
 
+@bp_usuario.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+	u = Usuario.query.get(id)
+	if request.method=="GET":
+		return render_template('usuario_update.html', u=u)
+	elif request.method=="POST":
+		u.nome = request.form.get('nome')
+		u.email = request.form.get('email')
+		db.session.add(u)
+		db.session.commit()
+		return redirect(url_for('.recovery'))
+

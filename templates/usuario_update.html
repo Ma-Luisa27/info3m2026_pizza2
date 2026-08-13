@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<form action="{{url_for('usuario.update', id=u.id)}}" method="POST">
+  Nome: <input type="text" name="nome" value="{{u.nome}}"><br/>
+  E-mail: <input type="email" name="email" value="{{u.email}}"><br/>
+  <input type="submit" name="Cadastrar">
+  <input type="reset" name="Limpar">
+</form>
+
+{% endblock %}

@@ -20,7 +20,9 @@
 				<td>{{u.id}}</td>
 				<td>{{u.nome}}</td>
 				<td>{{u.email}}</td>
-				<td>Detalhes - Editar - Excluir</td>
+				<td>Detalhes - 
+					<a href="{{url_for('usuario.update', id=u.id)}}">Editar</a> - 
+					Excluir</td>
 			</tr>
 			{% endfor %}
 		</tbody>
