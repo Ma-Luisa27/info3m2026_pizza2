@@ -22,7 +22,10 @@
 				<td>{{u.email}}</td>
 				<td>Detalhes - 
 					<a href="{{url_for('usuario.update', id=u.id)}}">Editar</a> - 
-					Excluir</td>
+					
+					<a href="{{url_for('usuario.delete', id=u.id)}}"
+					onclick="confirm('Deseja excluir o usuário?')">Excluir</a> 
+				</td>
 			</tr>
 			{% endfor %}
 		</tbody>

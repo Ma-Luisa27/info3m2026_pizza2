@@ -35,3 +35,9 @@ def update(id):
 		db.session.commit()
 		return redirect(url_for('.recovery'))
 
+@bp_usuario.route('/delete/<int:id>')
+def delete(id):
+	u = Usuario.query.get(id)
+	db.session.delete(u)
+	db.session.commit()
+	return redirect(url_for('.recovery'))
