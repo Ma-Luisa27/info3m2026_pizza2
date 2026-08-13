@@ -4,8 +4,13 @@ from utils import db
 import os
 from flask_migrate import Migrate
 from models import Usuario, Pizza
+from controllers.Usuario import bp_usuario
+from controllers.Pizza import bp_pizza
 
 app = Flask(__name__)
+app.register_blueprint(bp_usuario, url_prefix='/usuario')
+app.register_blueprint(bp_pizza, url_prefix='/pizza')
+
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')

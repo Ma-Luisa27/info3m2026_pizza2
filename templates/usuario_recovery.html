@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+		<div class="overflow-x-auto">
+		<table class="table">
+			<!-- head -->
+			<thead>
+			<tr>
+				<th></th>
+				<th>Nome</th>
+				<th>E-mail</th>
+				<th>Ação</th>
+			</tr>
+			</thead>
+			<tbody>
+			<!-- row 1 -->
+			
+			{% for u in usuarios %}
+			<tr>
+				<td>{{u.id}}</td>
+				<td>{{u.nome}}</td>
+				<td>{{u.email}}</td>
+				<td>Detalhes - Editar - Excluir</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{% endblock %}
