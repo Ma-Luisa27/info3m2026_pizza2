@@ -20,7 +20,7 @@
               <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
               <li><a href="{{ url_for('admin') }}">Área administrativa</a></li>
               <li><a href="{{ url_for('usuario.alterar_senha') }}">Alterar senha</a></li>
-              <li><a href="{{ url_for('login') }}" class="btn btn-outline btn-sm">Sair</a></li>
+              <li><a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair {{(current_user)}}</a></li>
             </ul>
           </div>
           <a href="{{ url_for('index') }}" class="text-xl font-black tracking-tight text-primary sm:text-2xl">Pizza Nossa!</a>

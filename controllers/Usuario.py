@@ -1,8 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import Usuario
-from utils import db
+from utils import db, lm
 from flask import Blueprint
+from flask_login import login_user, logout_user, login_required
 
 bp_usuario = Blueprint("usuario", __name__, template_folder='templates')
 
@@ -65,3 +66,24 @@ def delete(id):
 	db.session.delete(u)
 	db.session.commit()
 	return redirect(url_for('.get'))
+
+@lm.user_loader
+def load_user(id):
+	usuario = Usuario.query.filter_by(id=id).first()
+	return usuario
+
+@bp_usuario.route('/logout')
+def logout():
+	logout_user()
+	return redirect(url_for('login'))
+
+@bp_usuario.route('/autenticar', methods=['POST'])
+def autenticar():
+	email = request.form.get('email')
+	senha = request.form.get('senha')
+	usuario = Usuario.query.filter_by(email=email).first()
+	if usuario and check_password_hash(usuario.senha, senha):
+		login_user(usuario)
+		return redirect(url_for('admin'))
+	else:
+		return redirect(url_for('login'))

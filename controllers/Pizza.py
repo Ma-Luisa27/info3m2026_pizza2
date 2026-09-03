@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect, url_for
 from models import Pizza
-from utils import db
+from utils import db, lm
 from flask import Blueprint
+from flask_login import login_required
 
 bp_pizza = Blueprint("pizza", __name__, template_folder='templates')
 
@@ -11,6 +12,7 @@ def get():
 	return render_template('pizza_get.html', pizzas=pizzas)
 
 @bp_pizza.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
 	if request.method == 'GET':
 		return render_template('pizza_add.html')
@@ -25,6 +27,7 @@ def add():
 	return redirect(url_for('.get'))
 
 @bp_pizza.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
 	pizza = Pizza.query.get_or_404(id)
 	if request.method == 'GET':
@@ -37,6 +40,7 @@ def update(id):
 	return redirect(url_for('.get'))
 
 @bp_pizza.route('/delete/<int:id>')
+@login_required
 def delete(id):
 	pizza = Pizza.query.get_or_404(id)
 	db.session.delete(pizza)
