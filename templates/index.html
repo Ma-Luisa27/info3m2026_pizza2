@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 
+{% block titulo %} Página Inicial {% endblock %}
+
 {% block conteudo %}
-    <h2> Página Inicial </h2>
+<main class="min-h-screen bg-base-200 px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl">
+        <div class="mb-10">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Pizza Nossa!</p>
+            <h1 class="mt-2 text-4xl font-bold">Bem-vindo à Pizza Nossa!</h1>
+            <p class="mt-3 text-base-content/70">Conheça nosso cardápio e fale com a nossa equipe.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <a href="{{ url_for('cardapio') }}" class="btn btn-primary">Ver cardápio</a>
+            <a href="{{ url_for('faleconosco') }}" class="btn btn-outline">Fale conosco</a>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

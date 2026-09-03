@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Novo pedido {% endblock %}
+
+{% block conteudo %}
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl">
+        <div class="mb-6">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Pizza Nossa!</p>
+            <h1 class="mt-2 text-3xl font-bold">Novo pedido</h1>
+        </div>
+
+        <form action="{{ url_for('pedido.add') }}" method="POST" class="card border border-base-300 bg-base-100 shadow-sm">
+            <div class="card-body gap-5">
+                <fieldset>
+                    <legend class="mb-3 text-lg font-semibold">Selecione as pizzas</legend>
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        {% for pizza in pizzas %}
+                        <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-base-300 p-4 hover:border-primary">
+                            <input type="checkbox" name="pizzas" value="{{ pizza.id }}" class="checkbox checkbox-primary" {% if pizza.id == selected_pizza_id %}checked{% endif %} />
+                            <span class="flex-1">
+                                <span class="block font-medium">{{ pizza.sabor }}</span>
+                                <span class="text-sm text-base-content/60">R$ {{ '%.2f'|format(pizza.preco)|replace('.', ',') }}</span>
+                            </span>
+                        </label>
+                        {% else %}
+                        <p class="text-base-content/60 sm:col-span-2">Nenhuma pizza cadastrada.</p>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+                <div class="flex justify-end gap-3">
+                    <a href="{{ url_for('pedido.get') }}" class="btn btn-ghost">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Criar pedido</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

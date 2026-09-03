@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Usuários {% endblock %}
+
+{% block conteudo %}
+	<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+		<div class="mx-auto max-w-5xl">
+		<div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+			<div>
+				<p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Pizza Nossa!</p>
+				<h1 class="mt-2 text-3xl font-bold">Usuários cadastrados</h1>
+			</div>
+			<a href="{{ url_for('usuario.add') }}" class="btn btn-primary">Novo usuário</a>
+		</div>
+
+		<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100 shadow-sm">
+		<table class="table">
+			<thead>
+			<tr>
+				<th></th>
+				<th>Nome</th>
+				<th>E-mail</th>
+				<th class="text-right">Ações</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for u in usuarios %}
+			<tr>
+				<td>{{u.id}}</td>
+				<td>{{u.nome}}</td>
+				<td>{{u.email}}</td>
+				<td class="text-right">
+					<a href="{{url_for('usuario.update', id=u.id)}}" class="link link-primary mr-4">Editar</a>
+					<a href="{{url_for('usuario.delete', id=u.id)}}" class="link link-error" onclick="return confirm('Deseja excluir o usuário?')">Excluir</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+		</div>
+		</div>
+	</div>
+{% endblock %}

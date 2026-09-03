@@ -21,9 +21,17 @@
             <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><button> <a href="{{url_for('cardapio')}}">Cardápio</a></button></li>
-                <li><button> <a href="{{url_for('avaliacoes')}}">Avaliações</a></button></li>
                 <li><button><a href="{{url_for('faleconosco')}}">Fale conosco</a></button></li>
-                <li><button><a href="{{url_for('login')}}">Login</a></button></li>
+                <li>
+                  <details>
+                    <summary>Área administrativa</summary>
+                    <ul>
+                      <li><a href="{{ url_for('pizza.get') }}">Pizzas</a></li>
+                      <li><a href="{{ url_for('usuario.get') }}">Usuários</a></li>
+                      <li><a href="{{ url_for('pedido.get') }}">Pedidos</a></li>
+                    </ul>
+                  </details>
+                </li>
 
             </ul>
             </div>
@@ -34,15 +42,18 @@
 
         <div class="collapse-content lg:hidden z-1">
             <ul class="menu">
-            <li><button>Item 1</button></li>
-            <li>
-                <button>Parent</button>
-                <ul>
-                <li><button>Submenu 1</button></li>
-                <li><button>Submenu 2</button></li>
-                </ul>
-            </li>
-            <li><button>Item 3</button></li>
+          <li><a href="{{url_for('cardapio')}}">Cardápio</a></li>
+          <li><a href="{{url_for('faleconosco')}}">Fale conosco</a></li>
+          <li>
+            <details>
+              <summary>Área administrativa</summary>
+              <ul>
+                <li><a href="{{ url_for('pizza.get') }}">Pizzas</a></li>
+                <li><a href="{{ url_for('usuario.get') }}">Usuários</a></li>
+                <li><a href="{{ url_for('pedido.get') }}">Pedidos</a></li>
+              </ul>
+            </details>
+          </li>
             
         </ul>
         </div>

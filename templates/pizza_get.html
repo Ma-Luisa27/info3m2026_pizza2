@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Pizzas {% endblock %}
+
+{% block conteudo %}
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-5xl">
+		<div class="mb-6">
+			<p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Pizza Nossa!</p>
+			<h1 class="mt-2 text-3xl font-bold">Pizzas cadastradas</h1>
+			<div class="mt-4">
+				<a href="{{ url_for('pizza.add') }}" class="btn btn-primary">Nova pizza</a>
+			</div>
+		</div>
+
+		<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100 shadow-sm">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Sabor</th>
+						<th>Preço</th>
+						<th class="text-right">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for pizza in pizzas %}
+					<tr>
+						<td class="font-semibold">{{ pizza.id }}</td>
+						<td>{{ pizza.sabor }}</td>
+						<td>R$ {{ '%.2f'|format(pizza.preco)|replace('.', ',') }}</td>
+						<td class="text-right">
+							<a href="{{ url_for('pizza.update', id=pizza.id) }}" class="link link-primary mr-4">Editar</a>
+							<a href="{{ url_for('pizza.delete', id=pizza.id) }}" class="link link-error" onclick="return confirm('Deseja excluir a pizza?')">Excluir</a>
+						</td>
+					</tr>
+					{% else %}
+					<tr>
+						<td colspan="4" class="py-10 text-center text-base-content/60">Nenhuma pizza cadastrada.</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

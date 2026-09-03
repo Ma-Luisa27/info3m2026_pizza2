@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Nova pizza {% endblock %}
+
+{% block conteudo %}
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+    <form action="{{ url_for('pizza.add') }}" method="POST" class="card mx-auto max-w-xl border border-base-300 bg-base-100 shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title text-2xl">Nova pizza</h1>
+            <label class="form-control"><span class="label-text">Sabor</span><input class="input input-bordered" type="text" name="sabor" required></label>
+            <label class="form-control"><span class="label-text">Preço</span><input class="input input-bordered" type="number" name="preco" min="0" step="0.01" required></label>
+            <div class="card-actions justify-end"><a href="{{ url_for('pizza.get') }}" class="btn btn-ghost">Cancelar</a><button type="submit" class="btn btn-primary">Cadastrar pizza</button></div>
+        </div>
+    </form>
+</div>
+{% endblock %}

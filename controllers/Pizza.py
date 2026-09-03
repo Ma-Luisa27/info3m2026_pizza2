@@ -1,10 +1,39 @@
-from flask import render_template, request, redirect, flash
-from models import Usuario
+from flask import render_template, request, redirect, url_for
+from models import Pizza
 from utils import db
 from flask import Blueprint
 
 bp_pizza = Blueprint("pizza", __name__, template_folder='templates')
 
-@bp_pizza.route('/recovery')
-def recovery():
-	return render_template('pizza_recovery.html')
+@bp_pizza.route('/get')
+def get():
+	pizzas = Pizza.query.all()
+	return render_template('pizza_get.html', pizzas=pizzas)
+
+@bp_pizza.route('/add', methods=['GET', 'POST'])
+def add():
+	if request.method == 'GET':
+		return render_template('pizza_add.html')
+
+	pizza = Pizza(request.form.get('sabor'), float(request.form.get('preco')))
+	db.session.add(pizza)
+	db.session.commit()
+	return redirect(url_for('.get'))
+
+@bp_pizza.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+	pizza = Pizza.query.get_or_404(id)
+	if request.method == 'GET':
+		return render_template('pizza_update.html', pizza=pizza)
+
+	pizza.sabor = request.form.get('sabor')
+	pizza.preco = float(request.form.get('preco'))
+	db.session.commit()
+	return redirect(url_for('.get'))
+
+@bp_pizza.route('/delete/<int:id>')
+def delete(id):
+	pizza = Pizza.query.get_or_404(id)
+	db.session.delete(pizza)
+	db.session.commit()
+	return redirect(url_for('.get'))

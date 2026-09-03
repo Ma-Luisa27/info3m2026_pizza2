@@ -3,13 +3,15 @@ import json
 from utils import db
 import os
 from flask_migrate import Migrate
-from models import Usuario, Pizza
+from models import Usuario, Pizza, Pedido, PizzaPedido
 from controllers.Usuario import bp_usuario
 from controllers.Pizza import bp_pizza
+from controllers.Pedido import bp_pedido
 
 app = Flask(__name__)
 app.register_blueprint(bp_usuario, url_prefix='/usuario')
 app.register_blueprint(bp_pizza, url_prefix='/pizza')
+app.register_blueprint(bp_pedido, url_prefix='/pedido')
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
@@ -30,9 +32,14 @@ migrate = Migrate(app, db)
 def index():
     return render_template('index.html')
 
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
 @app.route('/cardapio')
 def cardapio():
-    return render_template('cardapio.html')
+    pizzas = Pizza.query.all()
+    return render_template('cardapio.html', pizzas=pizzas)
 
 @app.route('/faleconosco')
 def faleconosco():
