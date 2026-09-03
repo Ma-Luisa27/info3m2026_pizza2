@@ -20,6 +20,7 @@
 				<th></th>
 				<th>Nome</th>
 				<th>E-mail</th>
+				<th>Tipo</th>
 				<th class="text-right">Ações</th>
 			</tr>
 			</thead>
@@ -29,9 +30,16 @@
 				<td>{{u.id}}</td>
 				<td>{{u.nome}}</td>
 				<td>{{u.email}}</td>
-				<td class="text-right">
-					<a href="{{url_for('usuario.update', id=u.id)}}" class="link link-primary mr-4">Editar</a>
-					<a href="{{url_for('usuario.delete', id=u.id)}}" class="link link-error" onclick="return confirm('Deseja excluir o usuário?')">Excluir</a>
+				<td><span class="badge {% if u.administrador %}badge-primary{% else %}badge-ghost{% endif %}">{% if u.administrador %}Administrador{% else %}Usuário comum{% endif %}</span></td>
+				<td>
+					<div class="flex justify-end gap-2">
+						<a href="{{url_for('usuario.update', id=u.id)}}" class="btn btn-ghost btn-square btn-sm tooltip tooltip-left" data-tip="Editar usuário" aria-label="Editar usuário">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+						</a>
+						<a href="{{url_for('usuario.delete', id=u.id)}}" class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left" data-tip="Excluir usuário" aria-label="Excluir usuário" onclick="return confirm('Deseja excluir o usuário?')">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/></svg>
+						</a>
+					</div>
 				</td>
 			</tr>
 			{% endfor %}

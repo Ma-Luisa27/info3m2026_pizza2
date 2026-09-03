@@ -14,13 +14,17 @@
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {% for pizza in pizzas %}
             <article class="card border border-base-300 bg-base-100 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                {% if pizza.imagem %}<img src="{{ pizza.imagem }}" alt="Pizza de {{ pizza.sabor }}" class="h-52 w-full object-cover">{% else %}<div class="flex h-52 items-center justify-center bg-base-300 text-sm text-base-content/50">Imagem não cadastrada</div>{% endif %}
                 <div class="card-body">
                     <div class="flex items-start justify-between gap-4">
                         <h2 class="card-title">{{ pizza.sabor }}</h2>
                         <span class="text-lg font-semibold text-primary">R$ {{ '%.2f'|format(pizza.preco)|replace('.', ',') }}</span>
                     </div>
                     <div class="card-actions mt-4 justify-end">
-                        <a href="{{ url_for('pedido.add', pizza_id=pizza.id) }}" class="btn btn-primary">Fazer pedido</a>
+                        <form action="{{ url_for('pedido.add') }}" method="post">
+                            <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
+                            <button type="submit" class="btn btn-primary">Fazer pedido</button>
+                        </form>
                     </div>
                 </div>
             </article>

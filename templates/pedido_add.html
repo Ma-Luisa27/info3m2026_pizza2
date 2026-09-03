@@ -12,6 +12,18 @@
 
         <form action="{{ url_for('pedido.add') }}" method="POST" class="card border border-base-300 bg-base-100 shadow-sm">
             <div class="card-body gap-5">
+                <label class="form-control w-full gap-2">
+                    <span class="label-text font-medium">Usuário responsável</span>
+                    <select name="usuario_id" class="select select-bordered w-full" required>
+                        <option value="">Selecione o usuário</option>
+                        {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}">ID {{ usuario.id }} - {{ usuario.nome }} ({{ usuario.email }})</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                {% if selected_pizza_id %}
+                <input type="hidden" name="pizza_id" value="{{ selected_pizza_id }}">
+                {% endif %}
                 <fieldset>
                     <legend class="mb-3 text-lg font-semibold">Selecione as pizzas</legend>
                     <div class="grid gap-3 sm:grid-cols-2">

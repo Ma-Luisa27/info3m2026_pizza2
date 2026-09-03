@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from werkzeug.security import check_password_hash, generate_password_hash
 from models import Usuario
 from utils import db
 from flask import Blueprint
@@ -17,8 +18,9 @@ def add():
 	elif request.method=="POST":
 		nome = request.form.get('nome')
 		email = request.form.get('email')
-		senha = request.form.get('senha')
-		u = Usuario(nome, email, senha)
+		senha = generate_password_hash(request.form.get('senha'))
+		administrador = request.form.get('administrador') == 'on'
+		u = Usuario(nome, email, senha, administrador)
 		db.session.add(u)
 		db.session.commit()
 		return redirect(url_for('.get'))
@@ -31,10 +33,31 @@ def update(id):
 	elif request.method=="POST":
 		u.nome = request.form.get('nome')
 		u.email = request.form.get('email')
-		u.senha = request.form.get('senha')
+		u.administrador = request.form.get('administrador') == 'on'
 		db.session.add(u)
 		db.session.commit()
 		return redirect(url_for('.get'))
+
+@bp_usuario.route('/alterar-senha', methods=['GET', 'POST'])
+def alterar_senha():
+	if request.method == 'POST':
+		email = request.form.get('email')
+		senha_atual = request.form.get('senha_atual')
+		nova_senha = request.form.get('nova_senha')
+		confirmacao = request.form.get('confirmacao')
+		u = Usuario.query.filter_by(email=email).first()
+
+		if not u or not check_password_hash(u.senha, senha_atual):
+			flash('E-mail ou senha atual inválidos.', 'error')
+		elif nova_senha != confirmacao:
+			flash('A confirmação da nova senha não confere.', 'error')
+		else:
+			u.senha = generate_password_hash(nova_senha)
+			db.session.commit()
+			flash('Senha alterada com sucesso.', 'success')
+			return redirect(url_for('login'))
+
+	return render_template('usuario_senha.html')
 
 @bp_usuario.route('/delete/<int:id>')
 def delete(id):

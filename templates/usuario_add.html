@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
-{% block conteudo %}
 
-<form action="{{url_for('usuario.add')}}" method="POST">
-  Nome: <input type="text" name="nome"><br/>
-  E-mail: <input type="email" name="email"><br/>
-  Senha: <input type="text" name="senha"><br/>
-  <input type="submit" name="Cadastrar">
-  <input type="reset" name="Limpar">
-</form>
+{% block titulo %} Novo usuário {% endblock %}
+
+{% block conteudo %}
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+  <form action="{{ url_for('usuario.add') }}" method="POST" class="card mx-auto max-w-xl border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-5">
+      <div class="mb-2">
+        <h1 class="card-title text-2xl">Novo usuário</h1>
+        <p class="mt-1 text-sm text-base-content/60">Cadastre um usuário para associá-lo aos pedidos.</p>
+      </div>
+      <label class="form-control gap-2"><span class="label-text font-medium">Nome</span><input class="input input-bordered w-full" type="text" name="nome" placeholder="Nome completo" required></label>
+      <label class="form-control gap-2"><span class="label-text font-medium">E-mail</span><input class="input input-bordered w-full" type="email" name="email" placeholder="voce@exemplo.com" required></label>
+      <label class="form-control gap-2"><span class="label-text font-medium">Senha</span><input class="input input-bordered w-full" type="password" name="senha" placeholder="Digite uma senha" required></label>
+      <label class="flex cursor-pointer items-center justify-between rounded-lg border border-base-300 p-4">
+        <span><span class="block font-medium">Administrador</span><span class="text-sm text-base-content/60">Permite acessar os recursos administrativos.</span></span>
+        <input type="checkbox" name="administrador" class="toggle toggle-primary" />
+      </label>
+      <div class="card-actions justify-end"><a href="{{ url_for('usuario.get') }}" class="btn btn-ghost">Cancelar</a><button type="reset" class="btn btn-outline">Limpar</button><button type="submit" class="btn btn-primary">Cadastrar usuário</button></div>
+    </div>
+  </form>
+</div>
 
 {% endblock %}

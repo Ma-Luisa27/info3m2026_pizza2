@@ -5,12 +5,40 @@
 {% block conteudo %}
 <div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
     <form action="{{ url_for('pizza.update', id=pizza.id) }}" method="POST" class="card mx-auto max-w-xl border border-base-300 bg-base-100 shadow-sm">
-        <div class="card-body">
-            <h1 class="card-title text-2xl">Editar pizza</h1>
-            <label class="form-control"><span class="label-text">Sabor</span><input class="input input-bordered" type="text" name="sabor" value="{{ pizza.sabor }}" required></label>
-            <label class="form-control"><span class="label-text">Preço</span><input class="input input-bordered" type="number" name="preco" min="0" step="0.01" value="{{ pizza.preco }}" required></label>
+        <div class="card-body gap-5">
+            <div class="mb-2">
+                <h1 class="card-title text-2xl">Editar pizza</h1>
+                <p class="mt-1 text-sm text-base-content/60">Atualize as informações exibidas no cardápio.</p>
+            </div>
+            <label class="form-control gap-2"><span class="label-text font-medium">Sabor</span><input class="input input-bordered w-full" type="text" name="sabor" value="{{ pizza.sabor }}" required></label>
+            <label class="form-control gap-2"><span class="label-text font-medium">Preço</span><input class="input input-bordered w-full" type="number" name="preco" min="0" step="0.01" value="{{ pizza.preco }}" required></label>
+            <label class="form-control gap-2"><span class="label-text font-medium">Imagem da pizza</span><input id="imagem" class="input input-bordered w-full" type="url" name="imagem" value="{{ pizza.imagem or '' }}" placeholder="https://exemplo.com/pizza.jpg"><span class="label-text-alt mt-1">Informe o endereço de uma imagem online.</span></label>
+            <div>
+                <span class="label-text font-medium">Pré-visualização</span>
+                <div id="imagem-preview-vazio" class="mt-2 flex h-48 items-center justify-center rounded-lg border border-dashed border-base-300 bg-base-200 text-sm text-base-content/50 {% if pizza.imagem %}hidden{% endif %}">Nenhuma imagem informada</div>
+                <img id="imagem-preview" src="{{ pizza.imagem or '' }}" alt="Pré-visualização da pizza {{ pizza.sabor }}" class="mt-2 {% if not pizza.imagem %}hidden{% endif %} h-48 w-full rounded-lg object-cover" onerror="this.classList.add('hidden'); document.getElementById('imagem-preview-vazio').classList.remove('hidden');">
+            </div>
             <div class="card-actions justify-end"><a href="{{ url_for('pizza.get') }}" class="btn btn-ghost">Cancelar</a><button type="submit" class="btn btn-primary">Salvar alterações</button></div>
         </div>
     </form>
 </div>
+<script>
+    const campoImagem = document.getElementById('imagem');
+    const imagemPreview = document.getElementById('imagem-preview');
+    const previewVazio = document.getElementById('imagem-preview-vazio');
+
+    campoImagem.addEventListener('input', function () {
+        const urlImagem = campoImagem.value.trim();
+
+        if (!urlImagem) {
+            imagemPreview.classList.add('hidden');
+            previewVazio.classList.remove('hidden');
+            return;
+        }
+
+        imagemPreview.src = urlImagem;
+        imagemPreview.classList.remove('hidden');
+        previewVazio.classList.add('hidden');
+    });
+</script>
 {% endblock %}

@@ -15,7 +15,11 @@ def add():
 	if request.method == 'GET':
 		return render_template('pizza_add.html')
 
-	pizza = Pizza(request.form.get('sabor'), float(request.form.get('preco')))
+	pizza = Pizza(
+		request.form.get('sabor'),
+		float(request.form.get('preco')),
+		request.form.get('imagem')
+	)
 	db.session.add(pizza)
 	db.session.commit()
 	return redirect(url_for('.get'))
@@ -28,6 +32,7 @@ def update(id):
 
 	pizza.sabor = request.form.get('sabor')
 	pizza.preco = float(request.form.get('preco'))
+	pizza.imagem = request.form.get('imagem')
 	db.session.commit()
 	return redirect(url_for('.get'))
 

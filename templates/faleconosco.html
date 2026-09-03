@@ -3,6 +3,73 @@
 {% block titulo %} Fale conosco {% endblock %}
 
 {% block conteudo %}
-    <h2>Fale conosco</h2>
+<main class="min-h-screen bg-base-200 px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl">
+        <div class="mb-10 max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Pizza Nossa!</p>
+            <h1 class="mt-2 text-4xl font-bold">Fale conosco</h1>
+            <p class="mt-3 text-base-content/70">Tem alguma dúvida, sugestão ou quer organizar um pedido? Envie uma mensagem para a nossa equipe.</p>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-[1fr_0.65fr]">
+            <form action="#" method="post" class="card border border-base-300 bg-base-100 shadow-sm">
+                <div class="card-body gap-5 sm:p-8">
+                    <h2 class="card-title text-xl">Envie uma mensagem</h2>
+
+                    <div class="grid gap-5 sm:grid-cols-2">
+                        <label class="form-control gap-2">
+                            <span class="label-text font-medium">Nome</span>
+                            <input type="text" name="nome" class="input input-bordered w-full" placeholder="Seu nome" required>
+                        </label>
+                        <label class="form-control gap-2">
+                            <span class="label-text font-medium">E-mail</span>
+                            <input type="email" name="email" class="input input-bordered w-full" placeholder="voce@exemplo.com" required>
+                        </label>
+                    </div>
+
+                    <label class="form-control gap-2">
+                        <span class="label-text font-medium">Assunto</span>
+                        <input type="text" name="assunto" class="input input-bordered w-full" placeholder="Como podemos ajudar?" required>
+                    </label>
+
+                    <label class="form-control gap-2">
+                        <span class="label-text font-medium">Mensagem</span>
+                        <textarea name="mensagem" class="textarea textarea-bordered min-h-36 w-full" placeholder="Escreva sua mensagem..." required></textarea>
+                    </label>
+
+                    <div class="card-actions justify-end">
+                        <button type="reset" class="btn btn-ghost">Limpar</button>
+                        <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+                    </div>
+                </div>
+            </form>
+
+            <aside class="card border border-base-300 bg-primary text-primary-content shadow-sm">
+                <div class="card-body gap-6 sm:p-8">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.2em] opacity-80">Atendimento</p>
+                        <h2 class="mt-2 text-2xl font-bold">Estamos por aqui</h2>
+                        <p class="mt-3 opacity-80">Nossa equipe está pronta para ajudar você a escolher a pizza ideal.</p>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <p class="text-sm font-semibold opacity-75">E-mail</p>
+                            <p class="mt-1 font-medium">contato@pizzanossa.com</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold opacity-75">Telefone</p>
+                            <p class="mt-1 font-medium">(84) 0000-0000</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold opacity-75">Horário</p>
+                            <p class="mt-1 font-medium">Terça a domingo, das 18h às 23h</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

@@ -12,6 +12,14 @@
 
         <form action="{{ url_for('pedido.update', id=pedido.id) }}" method="POST" class="card border border-base-300 bg-base-100 shadow-sm">
             <div class="card-body gap-5">
+                <label class="form-control w-full gap-2">
+                    <span class="label-text font-medium">Usuário responsável</span>
+                    <select name="usuario_id" class="select select-bordered w-full" required>
+                        {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}" {% if usuario.id == pedido.usuario_id %}selected{% endif %}>ID {{ usuario.id }} - {{ usuario.nome }} ({{ usuario.email }})</option>
+                        {% endfor %}
+                    </select>
+                </label>
                 <fieldset>
                     <legend class="mb-3 text-lg font-semibold">Selecione as pizzas</legend>
                     <div class="grid gap-3 sm:grid-cols-2">
