@@ -13,7 +13,7 @@ app.register_blueprint(bp_usuario, url_prefix='/usuario')
 app.register_blueprint(bp_pizza, url_prefix='/pizza')
 app.register_blueprint(bp_pedido, url_prefix='/pedido')
 
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'chave-de-desenvolvimento-local')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
 db_mydb = os.getenv('DB_DATABASE')
