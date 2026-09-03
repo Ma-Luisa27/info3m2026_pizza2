@@ -15,12 +15,23 @@
             <label tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Abrir menu">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
             </label>
-            <ul tabindex="0" class="menu dropdown-content z-30 mt-3 w-56 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
-              <li><a href="{{ url_for('cardapio') }}">Cardápio</a></li>
-              <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
-              <li><a href="{{ url_for('admin') }}">Área administrativa</a></li>
-              <li><a href="{{ url_for('usuario.alterar_senha') }}">Alterar senha</a></li>
-              <li><a href="{{ url_for('login') }}" class="btn btn-outline btn-sm">Sair</a></li>
+            {% if current_user.is_authenticated %}
+              <ul tabindex="0" class="menu dropdown-content z-30 mt-3 w-56 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
+                <li><a href="{{ url_for('cardapio') }}">Cardápio</a></li>
+                <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
+                <li><a href="{{ url_for('admin') }}">Área administrativa</a></li>
+                <li><a href="{{ url_for('usuario.alterar_senha') }}">Alterar senha</a></li>
+              </ul>
+            {% endif %}
+              <ul tabindex="0" class="menu dropdown-content z-30 mt-3 w-56 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
+                <li><a href="{{ url_for('cardapio') }}">Cardápio</a></li>
+                <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
+              </ul>
+              {% if current_user.is_authenticated %}}
+              <li><a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair ({{current_user.nome}})</a></li>
+              {% else %}
+              <li><a href="{{ url_for('login') }}" class="btn btn-primary btn-sm">Entrar</a></li>
+              {% endif %}
             </ul>
           </div>
           <a href="{{ url_for('index') }}" class="text-xl font-black tracking-tight text-primary sm:text-2xl">Pizza Nossa!</a>
@@ -30,6 +41,7 @@
           <ul class="menu menu-horizontal gap-1 px-1 text-sm font-medium">
             <li><a href="{{ url_for('cardapio') }}">Cardápio</a></li>
             <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
+            {% if current_user.is_authenticated %}
             <li>
               <details>
                 <summary>Administrativo</summary>
@@ -42,13 +54,17 @@
                 </ul>
               </details>
             </li>
+            {% endif %}
           </ul>
         </nav>
 
         <div class="navbar-end gap-2">
           <span class="hidden text-xs font-medium uppercase tracking-wider text-base-content/50 xl:inline">Área do sistema</span>
-          <a href="{{ url_for('login') }}" class="btn btn-outline btn-sm">Sair</a>
+           {% if current_user.is_authenticated %}
+          <a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair ({{current_user.nome}})</a>
+          {% else %}
           <a href="{{ url_for('login') }}" class="btn btn-primary btn-sm">Entrar</a>
+          {% endif %}
         </div>
       </div>
     </header>

@@ -1,11 +1,12 @@
 from utils import db
+from flask_login import UserMixin
 
-class Usuario(db.Model):
+class Usuario(db.Model, UserMixin):
     __tablename__= "usuario"
     id = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(100))
     email = db.Column(db.String(100))
-    senha = db.Column(db.String(100))
+    senha = db.Column(db.String(200))
     administrador = db.Column(db.Boolean, default=False, nullable=False)
     pedidos = db.relationship("Pedido", back_populates="usuario")
 
