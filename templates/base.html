@@ -48,7 +48,9 @@
                 <ul class="z-30 w-48 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
                   <li><a href="{{ url_for('admin') }}">Visão geral</a></li>
                   <li><a href="{{ url_for('pizza.get') }}">Pizzas</a></li>
+                  {% if current_user.administrador %}
                   <li><a href="{{ url_for('usuario.get') }}">Usuários</a></li>
+                  {% endif %}
                   <li><a href="{{ url_for('pedido.get') }}">Pedidos</a></li>
                   <li><a href="{{ url_for('usuario.alterar_senha') }}">Alterar senha</a></li>
                 </ul>
@@ -68,6 +70,17 @@
         </div>
       </div>
     </header>
+    
+    {% set mensagens = get_flashed_messages(with_categories=true) %} 
+    {% if mensagens %}     
+   
+      {% for categoria, msg in mensagens %}
+       <div class="alert alert-{{ categoria }} alert-soft" role="alert">
+            {{ msg }}
+      </div>
+      {% endfor %}
+   
+    {% endif %}
 
     <section>
        {% block conteudo %}

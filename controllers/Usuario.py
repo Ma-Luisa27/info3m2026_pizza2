@@ -1,16 +1,22 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, abort
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import Usuario
 from utils import db, lm
 from flask import Blueprint
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 bp_usuario = Blueprint("usuario", __name__, template_folder='templates')
 
 @bp_usuario.route('/get')
+@login_required
 def get():
-	usuarios = Usuario.query.all()
-	return render_template('usuario_get.html', usuarios=usuarios)
+	if current_user.administrador:
+		usuarios = Usuario.query.all()
+		return render_template('usuario_get.html', usuarios=usuarios)
+	else:
+		abort(403)  # Acesso negado
+		#flash('Acesso restrito.', 'error')
+		#return redirect(url_for('admin'))
 
 @bp_usuario.route('/add', methods=['GET', 'POST'])
 def add():
@@ -24,6 +30,7 @@ def add():
 		u = Usuario(nome, email, senha, administrador)
 		db.session.add(u)
 		db.session.commit()
+		flash('Dados adicionados com sucesso', 'success')
 		return redirect(url_for('.get'))
 
 @bp_usuario.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -37,6 +44,7 @@ def update(id):
 		u.administrador = request.form.get('administrador') == 'on'
 		db.session.add(u)
 		db.session.commit()
+		flash('Dados atualizados com sucesso', 'success')
 		return redirect(url_for('.get'))
 
 @bp_usuario.route('/alterar-senha', methods=['GET', 'POST'])
@@ -65,6 +73,7 @@ def delete(id):
 	u = Usuario.query.get(id)
 	db.session.delete(u)
 	db.session.commit()
+	flash('Dados excluídos com sucesso', 'success')
 	return redirect(url_for('.get'))
 
 @lm.user_loader
@@ -75,6 +84,7 @@ def load_user(id):
 @bp_usuario.route('/logout')
 def logout():
 	logout_user()
+	flash('Você saiu do sistema.', 'success')
 	return redirect(url_for('login'))
 
 @bp_usuario.route('/autenticar', methods=['POST'])
@@ -86,5 +96,9 @@ def autenticar():
 		login_user(usuario)
 		return redirect(url_for('admin'))
 	else:
+		flash('Usuário ou senha inválidos')
 		return redirect(url_for('login'))
 	
+@bp_usuario.errorhandler(403)
+def acesso_negado(error):
+    return render_template('acesso_negado.html'), 403

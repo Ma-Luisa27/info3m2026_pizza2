@@ -82,3 +82,11 @@ def teste_update():
     db.session.add(user)
     db.session.commit()
     return 'dados alterados com sucesso!'
+
+@app.errorhandler(403)
+def acesso_negado(error):
+    return render_template('acesso_negado.html'), 403
+
+@app.errorhandler(404)
+def pagina_nao_encontrada(error):  
+    return render_template('pagina_nao_encontrada.html'), 404
