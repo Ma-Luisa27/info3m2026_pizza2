@@ -8,7 +8,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 bp_usuario = Blueprint("usuario", __name__, template_folder='templates')
 
 @bp_usuario.route('/get')
-@login_required
+#@login_required
 def get():
 	if current_user.administrador:
 		usuarios = Usuario.query.all()

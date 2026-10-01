@@ -29,7 +29,7 @@
 					<tr>
 						<td class="font-semibold">{{ pizza.id }}</td>
 						<td>
-							{% if pizza.imagem %}<img src="{{ pizza.imagem }}" alt="Pizza de {{ pizza.sabor }}" class="h-12 w-12 rounded-lg object-cover">{% else %}<span class="text-sm text-base-content/50">Sem imagem</span>{% endif %}
+							{% if pizza.imagem %}<img src="{{url_for('static', filename=pizza.imagem)}}" alt="Pizza de {{ pizza.sabor }}" class="h-12 w-12 rounded-lg object-cover">{% else %}<span class="text-sm text-base-content/50">Sem imagem</span>{% endif %}
 						</td>
 						<td>{{ pizza.sabor }}</td>
 						<td>R$ {{ '%.2f'|format(pizza.preco)|replace('.', ',') }}</td>

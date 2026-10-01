@@ -14,6 +14,11 @@ app.register_blueprint(bp_pizza, url_prefix='/pizza')
 app.register_blueprint(bp_pedido, url_prefix='/pedido')
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'chave-de-desenvolvimento-local')
+app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, 'uploads')
+
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
+
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
 db_mydb = os.getenv('DB_DATABASE')
