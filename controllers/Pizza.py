@@ -1,7 +1,7 @@
 from flask import current_app, flash, render_template, request, redirect, url_for
 from models import Pizza
 from utils import db, lm
-from flask import Blueprint
+from flask import Blueprint,  current_app
 from flask_login import login_required
 import os, uuid
 from werkzeug.utils import secure_filename

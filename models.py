@@ -7,13 +7,15 @@ class Usuario(db.Model, UserMixin):
     nome = db.Column(db.String(100))
     email = db.Column(db.String(100))
     senha = db.Column(db.String(200))
+    imagem = db.Column(db.String(500))
     administrador = db.Column(db.Boolean, default=False, nullable=False)
     pedidos = db.relationship("Pedido", back_populates="usuario")
 
-    def __init__(self, nome, email, senha, administrador=False):
+    def __init__(self, nome, email, senha, imagem, administrador=False):
         self.nome = nome
         self.email = email
         self.senha = senha
+        self.imagem = imagem
         self.administrador = administrador
     
     def __repr__(self):
